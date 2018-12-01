@@ -8,7 +8,7 @@ services:
     image: drupal:latest
   # Environment variables
     environment:
-      DRUPAL_DBURL: mysql://drupal:drupal@database:3306/drupal
+      DRUPAL_DBURL: 'mysql://boardac:boardac@database:3306/boardac'
       MYSQL_USER: boardac
       MYSQL_PASSWORD: boardac
       MYSQL_DATABASE: boardac
@@ -18,13 +18,13 @@ services:
     # Host machine's port 80 will map to Drupal's port 80
       - "80:80"
     volumes:
-      - ./modules:/var/www/html/modules
-      - ./profiles:/var/www/html/profiles
-      - ./themes:/var/www/html/themes
+      - ./modules:/var/www/html/modules:rw
+      - ./profiles:/var/www/html/profiles:rw
+      - ./themes:/var/www/html/themes:rw
     # this takes advantage of the feature in Docker that a new anonymous
     # volume (which is what we're creating here) will be initialized with the
     # existing content of the image at the same location
-      - ./sites/var/www/html/sites
+      - ./sites:/var/www/html/sites
     links:
         - database:database
     restart: always
