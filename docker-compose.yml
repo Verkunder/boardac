@@ -1,0 +1,45 @@
+version: '3.1'
+
+services:
+# PHP Web Server
+  web:
+  # Build the Drupal 8 image
+  # https://hub.docker.com/r/_/drupal/
+    image: drupal:latest
+  # Environment variables
+    environment:
+      DRUPAL_DBURL: mysql://drupal:drupal@database:3306/drupal
+    ports:
+    # Host machine's port 80 will map to Drupal's port 80
+      - "80:80"
+    volumes:
+      - ./modules:/var/www/html/modules
+      - ./profiles:/var/www/html/profiles
+      - ./themes:/var/www/html/themes
+    # this takes advantage of the feature in Docker that a new anonymous
+    # volume (which is what we're creating here) will be initialized with the
+    # existing content of the image at the same location
+      - ./sites/var/www/html/sites
+    links:
+        - database:database
+    restart: always
+
+# MySQL Server
+  database:
+    image: mariadb:latest
+    environment:
+      MYSQL_USER: bordac
+      MYSQL_PASSWORD: bordac
+      MYSQL_DATABASE: bordac
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql:rw
+    restart: always
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
