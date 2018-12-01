@@ -9,6 +9,11 @@ services:
   # Environment variables
     environment:
       DRUPAL_DBURL: mysql://drupal:drupal@database:3306/drupal
+      MYSQL_USER: boardac
+      MYSQL_PASSWORD: boardac
+      MYSQL_DATABASE: boardac
+
+
     ports:
     # Host machine's port 80 will map to Drupal's port 80
       - "80:80"
@@ -28,9 +33,9 @@ services:
   database:
     image: mariadb:latest
     environment:
-      MYSQL_USER: bordac
-      MYSQL_PASSWORD: bordac
-      MYSQL_DATABASE: bordac
+      MYSQL_USER: boardac
+      MYSQL_PASSWORD: boardac
+      MYSQL_DATABASE: boardac
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     ports:
