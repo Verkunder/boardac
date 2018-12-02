@@ -33,7 +33,7 @@ services:
 # MySQL Server
   database:
     image: mariadb:latest
-    container_name: myssql
+    container_name: mysql
     environment:
       MYSQL_USER: boardac
       MYSQL_PASSWORD: boardac
@@ -44,6 +44,7 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql:/var/lib/mysql:rw
+      - ./boardac.sql:/docker-entrypoint-initdb.d/dump.sql
     restart: always
   adminer:
     container_name: adminer
